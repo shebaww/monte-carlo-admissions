@@ -17,7 +17,7 @@ clusters:
     Merit:
         rho: 0.35
     Government:
-        rho: 0.10
+        rho: 0.40
     Special:
         rho: 0.07
 

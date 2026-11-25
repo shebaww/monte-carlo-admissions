@@ -57,10 +57,11 @@ class Operations():
         return decay
     
     def weighted_sum(self, c: pd.DataFrame, beta: float, T_c: int, xi: float, p_c: float):
+        _sat = self.sat # Throw away variable for test optionality
         if c["submitting_sat"] == False:
 # Neutral stand point on test optionality
-            self.sat = 0.5
-        S_c = T_c * (beta * p_c * ((c["w_gpa"] * self.gpa) + (c["w_sat"] * self.sat) + (c["w_essay"] * self.essay_eff) + (c["w_ecs"] * self.ecs) + (c["w_rec"] * self.rec) + (c["w_awards"] * self.awards)) + xi)
+            _sat = 0.5
+        S_c = T_c * (beta * p_c * ((c["w_gpa"] * self.gpa) + (c["w_sat"] * _sat) + (c["w_essay"] * self.essay_eff) + (c["w_ecs"] * self.ecs) + (c["w_rec"] * self.rec) + (c["w_awards"] * self.awards)) + xi)
         # Clamping
         if S_c > 1.0:
             S_c = 1.0
@@ -72,7 +73,7 @@ class Operations():
         return int(self.rng.random() < S_c)
 
     def academic_triage(self, college: pd.DataFrame):
-        if (self.gpa * 1.5) + 2.5 >= college["min_gpa"]:
+        if self.gpa >= college["min_gpa"]:
             if (self.sat * 600) + 1000 < college["min_sat"] and not college["test_optionality"]:
                 T_c = 0
             else:
@@ -124,12 +125,12 @@ class Operations():
 
     def reset(self):
         # Randomizes college order
-        self.college_df = self.college_df.sample(frac=1).reset_index(drop=True)
+        self.college_df = self.college_df.sample(frac=1, random_state=self.rng).reset_index(drop=True)
         # Cleans Beta lists for the next trial
-#       self.need_beta = [self.beta_default]
-#       self.merit_beta = [self.beta_default]
-#       self.special_beta = [self.beta_default]
-#       self.government_beta = [self.beta_default]
+        self.need_beta = [self.beta_default]
+        self.merit_beta = [self.beta_default]
+        self.special_beta = [self.beta_default]
+        self.government_beta = [self.beta_default]
         # Re-runs cluster noise
         self.need_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
         self.merit_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
@@ -217,7 +218,7 @@ class Operations():
             beta_c = self.current_beta(college)
             T_c = self.academic_triage(college)
             xi_c = self.noise(college)
-            p_c = college["full_ride_perc"]
+            p_c = college["full_ride_perc"] 
             S_c = self.weighted_sum(college, beta_c, T_c, xi_c, p_c)
             
             # Update beta

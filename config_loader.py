@@ -40,14 +40,14 @@ class Validate():
             raise ValueError("Your config.yaml applicant infromation is wrong, everything except gpa and SAT must be out of 1")
         # DF Converting
         if (self.college_df["min_gpa"] > 1).any():
-            self.college_df["min_gpa"] =  self.college_df["min_gpa"] / 4 
+            self.college_df["min_gpa"] =  (self.college_df["min_gpa"] - 2.5) / 1.5 
             print("Converting MIN GPA to 1.0 Scale")
 
         print("Converting MIN SAT to 1.0 Scale")
         i = 0
         for row in self.college_df["min_sat"]:
             if row > 1:
-                self.college_df.loc[i, "min_sat"] = (row - 400) / 1200
+                self.college_df.loc[i, "min_sat"] = (row - 1000) / 600
             i+=1
 
 
