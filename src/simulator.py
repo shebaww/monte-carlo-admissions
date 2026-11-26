@@ -1,20 +1,21 @@
+import types
 from pathlib import Path
 import time
 import numpy as np
 import pandas as pd
 import yaml
 import matplotlib.pyplot as plt
-from config_loader import Validate
+
 
 class Operations():
-    def __init__(self):
-        self.output = Path("./outputs")
+    def __init__(self, output: str, DataIngestor: types.ModuleType, config: str):
+        self.output = Path(output)
         self.output.mkdir(parents=True, exist_ok=True)
-        self.validate = Validate()
-        self.config = "./config.yaml"
-        self.gpa, self.sat, self.essay, self.ecs, self.rec, self.awards, self.college_df = self.validate.run()
+        self.config = config
+        self.gpa, self.sat, self.essay, self.ecs, self.rec, self.awards, self.college_df = DataIngestor.run()
         with open(self.config) as file:
             self.config_data = yaml.safe_load(file)
+        print(f"Hello {self.config_data["applicant"]["name"]}. Please wait a while.")
         self.trials = self.config_data["config"]["trials"]
         self.capacity_c = self.config_data["config"]["capacity_c"]
         self.mu = self.config_data["config"]["mu"]
@@ -24,33 +25,24 @@ class Operations():
         self.beta_default = self.config_data["config"]["beta_default"]
         self.beta_max = self.config_data["config"]["beta_max"]
         self.beta_min = self.config_data["config"]["beta_min"]
-        self.need_rho = self.config_data["clusters"]["Need"]["rho"]
-        self.merit_rho = self.config_data["clusters"]["Merit"]["rho"]
-        self.government_rho = self.config_data["clusters"]["Government"]["rho"]
-        self.special_rho = self.config_data["clusters"]["Special"]["rho"]
         self.decay_min = 0.5
         self.college_num = len(self.college_df)
         
         self.essay_eff = self.decay_function() * self.essay
         
-        self.need_beta = [self.beta_default]
-        self.merit_beta = [self.beta_default]
-        self.special_beta = [self.beta_default]
-        self.government_beta = [self.beta_default]
+        self.betas = {cluster: [self.beta_default] for cluster in self.config_data["clusters"]  }
         
         self.seed = self.config_data["config"]["seed"]
         self.rng = np.random.default_rng(self.seed)
-        self.need_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.merit_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.government_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.special_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
+        self.cluster_noise = {cluster: self.rng.normal(loc=self.mu, scale=self.sigma) for cluster in self.config_data["clusters"]  } 
+        self.rho = {cluster: data["rho"] for cluster, data in self.config_data["clusters"].items()  } 
 
         # Analysis trackers
         self.trials_with_at_least_one_win = 0
         self.total_individual_wins = 0
         self.college_win_counts = {college['name']: 0 for idx, college in self.college_df.iterrows()}
         self.college_triage_fails = {college['name']: 0 for idx, college in self.college_df.iterrows()}
-        self.cluster_win_counts = {"Need": 0, "Merit": 0, "Government": 0, "Special": 0}
+        self.cluster_win_counts = {cluster: 0 for cluster in self.config_data["clusters"] }
         
     def decay_function(self):
         decay = max(self.decay_min, 1 - self._lambda * max(0, self.college_num - self.capacity_c))
@@ -83,59 +75,23 @@ class Operations():
         return T_c
     
     def current_beta(self, college: pd.DataFrame):
-        if college["cluster"] == "Need":
-            beta = self.need_beta[-1]
-        elif college["cluster"] == "Merit":
-            beta = self.merit_beta[-1]
-        elif college["cluster"] == "Special":
-            beta = self.special_beta[-1]
-        elif college["cluster"] == "Government":
-            beta = self.government_beta[-1]
-        return beta 
+        return self.betas[college["cluster"]][-1]
 
     def dynamic_beta(self, Y_c: int, college: pd.DataFrame, S_c: float):
-        if college["cluster"] == "Need":
-            beta = self.need_beta[-1] + self.alpha * (Y_c - S_c)
-            beta = max(self.beta_min, min(beta, self.beta_max))
-            self.need_beta.append(beta)
-        elif college["cluster"] == "Merit":
-            beta = self.merit_beta[-1] + self.alpha * (Y_c - S_c)
-            beta = max(self.beta_min, min(beta, self.beta_max))
-            self.merit_beta.append(beta)
-        elif college["cluster"] == "Government":
-            beta = self.government_beta[-1] + self.alpha * (Y_c - S_c)
-            beta = max(self.beta_min, min(beta, self.beta_max))
-            self.government_beta.append(beta)
-        elif college["cluster"] == "Special":
-            beta = self.special_beta[-1] + self.alpha * (Y_c - S_c)
-            beta = max(self.beta_min, min(beta, self.beta_max))
-            self.special_beta.append(beta)
+        beta = self.betas[college["cluster"]][-1] + self.alpha * (Y_c - S_c)
+        self.betas[college["cluster"]].append(beta)
         
     def noise(self, college):
         epsilon_c = self.rng.normal(loc=self.mu, scale=self.sigma)
-        if college["cluster"] == "Need":
-            xi_c = self.need_rho * self.need_noise + (1 - self.need_rho) * epsilon_c
-        elif college["cluster"] == "Merit":
-            xi_c = self.merit_rho * self.merit_noise + (1 - self.merit_rho) * epsilon_c
-        elif college["cluster"] == "Government":
-            xi_c = self.government_rho * self.government_noise + (1 - self.government_rho) * epsilon_c
-        elif college["cluster"] == "Special":
-            xi_c = self.special_rho * self.special_noise + (1 - self.special_rho) * epsilon_c
+        xi_c = self.rho[college["cluster"]] * self.cluster_noise[college["cluster"]]  + (1 - self.rho[college["cluster"]] ) * epsilon_c
         return xi_c
 
     def reset(self):
         # Randomizes college order
         self.college_df = self.college_df.sample(frac=1, random_state=self.rng).reset_index(drop=True)
-        # Cleans Beta lists for the next trial
-        self.need_beta = [self.beta_default]
-        self.merit_beta = [self.beta_default]
-        self.special_beta = [self.beta_default]
-        self.government_beta = [self.beta_default]
-        # Re-runs cluster noise
-        self.need_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.merit_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.government_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
-        self.special_noise = self.rng.normal(loc=self.mu, scale=self.sigma)
+        # Cleans Beta lists and cluster noise for the next trial
+        self.betas = {cluster: [self.beta_default] for cluster in self.config_data["clusters"]  }
+        self.cluster_noise = {cluster: self.rng.normal(loc=self.mu, scale=self.sigma) for cluster in self.config_data["clusters"]  } 
 
     def expected_wins(self):
         return self.total_individual_wins / self.trials
@@ -151,37 +107,41 @@ class Operations():
         sorted_names = [names[i] for i in sorted_indices]
         sorted_percs = [win_percs[i] for i in sorted_indices]
 
-        plt.figure(figsize=(12, 6))
-        plt.barh(sorted_names, sorted_percs, color='skyblue')
-        plt.xlabel('Win Percentage (%)')
-        plt.title('Full Ride Probability by College')
-        plt.gca().invert_yaxis()
-        plt.tight_layout()
-        plt.savefig(self.output / "college_wins.png", dpi=300, bbox_inches="tight")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.barh(sorted_names, sorted_percs, color='skyblue')
+        ax.set_xlabel('Win Percentage (%)')
+        ax.set_title('Full Ride Probability by College')
+        ax.invert_yaxis()
+        fig.tight_layout()
+        fig.savefig(self.output / "college_wins.png", dpi=300, bbox_inches="tight")
+        plt.close(fig)
 
     def plot_cluster_wins(self):
         clusters = list(self.cluster_win_counts.keys())
         wins = list(self.cluster_win_counts.values())
 
-        plt.figure(figsize=(8, 5))
-        plt.bar(clusters, wins, color=['red', 'green', 'orange', 'blue'])
-        plt.ylabel(f'Total Wins (Out of {self.trials} Trials)')
-        plt.title('Total Full Ride Wins by Cluster')
-        plt.savefig(self.output / "cluster_wins.png", dpi=300, bbox_inches="tight")
+        fig, ax = plt.subplots(figsize=(8, 5))
+        colors = plt.cm.tab10(np.linspace(0, 1, len(clusters)))
+        ax.bar(clusters, wins, color=colors)
+        ax.set_ylabel(f'Total Wins (Out of {self.trials} Trials)')
+        ax.set_title('Total Full Ride Wins by Cluster')
+        fig.tight_layout()
+        fig.savefig(self.output / "cluster_wins.png", dpi=300, bbox_inches="tight")
+        plt.close(fig)
 
     def plot_beta_trajectories(self):
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.need_beta, "r", label="Need")
-        plt.plot(self.merit_beta, "g", label="Merit")
-        plt.plot(self.government_beta, "y", label="Government")
-        plt.plot(self.special_beta, "b", label="Special")
-        plt.axhline(y=1.0, color='black', linestyle='--', alpha=0.5, label="Default (1.0)")
-        plt.xlabel('Order of Colleges Evaluated')
-        plt.ylabel('Beta Value')
-        plt.title('Dynamic Beta Trajectory (Final Trial)')
-        plt.legend()
-        plt.show()
-
+        fig, ax = plt.subplots(figsize=(10, 6))
+        for cluster in self.config_data["clusters"]:
+            ax.plot(self.betas[cluster], label=cluster)
+        ax.axhline(y=1.0, color='black', linestyle='--', alpha=0.5, label="Default (1.0)")
+        ax.set_xlabel('Order of Colleges Evaluated')
+        ax.set_ylabel('Beta Value')
+        ax.set_title('Dynamic Beta Trajectory (Final Trial)')
+        ax.legend()
+        fig.tight_layout()
+        fig.savefig(self.output / "beta_trajectories.png", dpi=300, bbox_inches="tight")
+        plt.close(fig)
+        
     def recommend_colleges_to_remove(self):
         print("--- Colleges to Consider Removing ---")
         for name, fails in self.college_triage_fails.items():

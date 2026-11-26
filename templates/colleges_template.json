@@ -1,0 +1,30 @@
+{
+  "Example University (Full Ride Program)": {
+    "w_gpa": 0.30,
+    "w_sat": 0.20,
+    "w_essay": 0.20,
+    "w_ecs": 0.15,
+    "w_rec": 0.05,
+    "w_awards": 0.10,
+    "min_sat": 1350,
+    "min_gpa": 3.5,
+    "test_optionality": true,
+    "full_ride_perc": 0.03,
+    "submitting_sat": true,
+    "cluster": "Merit"
+  },
+  "Example Government Scholarship": {
+    "w_gpa": 0.40,
+    "w_sat": 0.05,
+    "w_essay": 0.15,
+    "w_ecs": 0.10,
+    "w_rec": 0.10,
+    "w_awards": 0.20,
+    "min_sat": 1100,
+    "min_gpa": 3.0,
+    "test_optionality": true,
+    "full_ride_perc": 0.05,
+    "submitting_sat": false,
+    "cluster": "Government"
+  }
+}

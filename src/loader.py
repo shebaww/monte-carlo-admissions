@@ -3,10 +3,10 @@ import pandas as pd
 import json
 
 
-class Validate():
-    def __init__(self):
-        self.config = "./config.yaml"
-        self.colleges = "./colleges.json"
+class DataIngestor():
+    def __init__(self, config: str, colleges: str):
+        self.config = config
+        self.colleges = colleges
         try:
             with open(self.config) as file:
                 self.config_data = yaml.safe_load(file)

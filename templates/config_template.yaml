@@ -10,8 +10,8 @@ config:
     mu: 0
     seed: 42
 
-
 clusters:
+    # Rho determines how correlated the colleges in a cluster are (0.0 to 1.0)
     Need:
         rho: 0.45
     Merit:
@@ -22,10 +22,12 @@ clusters:
         rho: 0.07
 
 applicant:
+    # Enter GPA on a 4.0 scale, SAT on a 1600 scale and your name
+    # Everything else must be out of 1.0 (e.g., 0.8 for a strong essay)
+    name: "Nahom"
     gpa: 3.55
     sat: 1370
     essay: 0.80
     ecs: 0.70
     rec: 0.85
     awards: 0.63
-
