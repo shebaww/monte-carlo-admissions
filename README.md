@@ -331,6 +331,8 @@ pip install -r requirements.txt
 - References
 - Explanation
 - Citation
+- Effort variable and function, either calculated by supplemental amount, or just effort variable
+- Applying through where? (Should be in effort) calculates if common app or coalition is greater than maximum
 
 ## License
 
