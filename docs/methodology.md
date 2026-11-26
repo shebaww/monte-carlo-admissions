@@ -46,33 +46,32 @@ $$C_{\text{weight}}= w_{\text{gpa}} + w_{\text{SAT}} + w_{\text{essay}} + w_{\te
 
 $$w_j \ge 0, \quad \sum_jw_j \approx 1 $$
 
-$\text{Where: }
-\\
-C\_{\text{weight}}: \quad {\text{How the colleges weigh their decision out of 1.00}}$
+$\text{Where: }$
+$C\_{\text{weight}}: \quad {\text{How the colleges weigh their decision out of 1.00}}$
 
 \\
 
-w\_{\text{gpa}}: \quad \text{How the colleges weigh your GPA}
+$w\_{\text{gpa}}: \quad \text{How the colleges weigh your GPA}$
 
 \\
 
-w\_{\text{SAT}}: \quad \text{How the colleges weigh your SAT}
+$w\_{\text{SAT}}: \quad \text{How the colleges weigh your SAT}$
 
 \\
 
-w\_{\text{essay}}: \quad \text{How the colleges weigh your Essays}
+$w\_{\text{essay}}: \quad \text{How the colleges weigh your Essays}$
 
 \\
 
-w\_{\text{EC's}}: \quad \text{How the colleges weigh your Extra-Curriculars}
+$w\_{\text{EC's}}: \quad \text{How the colleges weigh your Extra-Curriculars}$
 
 \\
 
-w\_{\text{Awards}}: \quad \text{How the colleges weigh your Awards}
+$w\_{\text{Awards}}: \quad \text{How the colleges weigh your Awards}$
 
 \\
 
-w\_{\text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}$
+$w\_{\text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}$
 
 Conversion metric
 
@@ -91,33 +90,33 @@ a_{\text{GPA}}, a_{\text{SAT}} \in [0,1]
 
 $$
 
-$\text{Where: }
+$\text{Where: }$
 
 \\
 
-a\_{\text{gpa}}: \quad \text{Converted GPA Score out of 1}
+$a\_{\text{gpa}}: \quad \text{Converted GPA Score out of 1}$
 
 \\
 
-a\_{\text{SAT}}: \quad \text{Converted SAT Score out of 1}
+$a\_{\text{SAT}}: \quad \text{Converted SAT Score out of 1}$
 
 \\
 
-a\_{\text{essay}}: \quad \text{Essay out of 1}
+$a\_{\text{essay}}: \quad \text{Essay out of 1}$
 
 \\
 
-a\_{\text{EC's}}: \quad \text{Extra-Curriculars out of 1}
+$a\_{\text{EC's}}: \quad \text{Extra-Curriculars out of 1}$
 
 \\
 
-a\_{\text{Awards}}: \quad \text{Awards out of 1}
+$a\_{\text{Awards}}: \quad \text{Awards out of 1}$
 
 \\
 
-a\_{\text{rec}}: \quad \text{Recommendation Letters out of 1} \\
+$a\_{\text{rec}}: \quad \text{Recommendation Letters out of 1}$
 
-\text{Note}: \quad \text{Since everything else is holisitic} \\ \text{the user enters an accurate and unbiased rating out of 1}$
+$\text{Note}: \quad \text{Since everything else is holisitic} \\ \text{the user enters an accurate and unbiased rating out of 1}$
 
 Application Depreceation
 
@@ -128,23 +127,23 @@ q(N)=\text{max}\left(0.5, 1-\lambda\cdot\text{max}(0, N-N_0)\right)
 
 $$
 
-$\text{Where}:
+$\text{Where}:$
 
 \\
 
-q(N): \quad \text{Scalar Multiplier of Application Decay for N number of colleges}
+$q(N): \quad \text{Scalar Multiplier of Application Decay for N number of colleges}$
 
 \\
 
-N_0: \quad \text{Number of colleges where effort starts affecting application}
+$N_0: \quad \text{Number of colleges where effort starts affecting application}$
 
 \\
 
-\lambda: \quad \text{Decay Rate}
+$\lambda: \quad \text{Decay Rate}$
 
 \\
 
-N: \quad \text{Number of Colleges you're applying to}$
+$N: \quad \text{Number of Colleges you're applying to}$
 
 Essay against Decay
 
@@ -155,19 +154,19 @@ a_{\text{essay, eff}}= a_{\text{essay}}\cdot q(N)
 
 $$
 
-$\text{Where}:
+$\text{Where}:$
 
 \\
 
-a\_{\text{essay, eff}}: \quad \text{Effective Essay, essay score calculated against Application decay}
+$a\_{\text{essay, eff}}: \quad \text{Effective Essay, essay score calculated against Application decay}$
 
 \\
 
-a\_{\text{essay}}: \quad \text{Essay score out of 1}
+$a\_{\text{essay}}: \quad \text{Essay score out of 1}$
 
 \\
 
-q(N): \quad \text{Scalar Multiplier of Application Decay for N number of colleges}$
+$q(N): \quad \text{Scalar Multiplier of Application Decay for N number of colleges}$
 
 College Chances
 
@@ -177,7 +176,7 @@ S(\beta)^{k}_c=T_c\cdot( \beta\cdot p_c\left[(w_{c,\text{gpa}}a_{\text{gpa}}) + 
 
 \\
 
-S_c(\beta)\in [0,1]
+$$S_c(\beta)\in [0,1]$$
 
 
 $$
@@ -186,57 +185,57 @@ $\text{Where: }
 
 \\
 
-S(\beta)^{k}\_c: \quad \text{Estimated Competitivness Probability of Full ride at college c of index k}
+$S(\beta)^{k}\_c: \quad \text{Estimated Competitivness Probability of Full ride at college c of index k}$
 
 \\
 
-p_c: \quad \text{Full ride percentage published by college or estimated}
+$p_c: \quad \text{Full ride percentage published by college or estimated}$
 
 \\
 
-a*{\text{gpa}}: \quad \text{Converted GPA Score out of 1}\\a*{\text{SAT}}: \quad \text{Converted SAT Score out of 1}\\a*{\text{essay, eff}}: \quad \text{Effective Essay, essay score calculated against Application decay}\\a*{\text{EC's}}: \quad \text{Extra-Curriculars out of 1}\\a*{\text{Awards}}: \quad \text{Awards out of 1}\\a*{\text{rec}}: \quad \text{Recommendation Letters out of 1}
+$a*{\text{gpa}}: \quad \text{Converted GPA Score out of 1}\\a*{\text{SAT}}: \quad \text{Converted SAT Score out of 1}\\a*{\text{essay, eff}}: \quad \text{Effective Essay, essay score calculated against Application decay}\\a*{\text{EC's}}: \quad \text{Extra-Curriculars out of 1}\\a*{\text{Awards}}: \quad \text{Awards out of 1}\\a*{\text{rec}}: \quad \text{Recommendation Letters out of 1}
 
 \\
 
-\xi_c: \quad \text{Noise Mixture of School Individual Noize, Enviroment Noise and} \\ \text{positive correlation of college c}
+$\xi_c: \quad \text{Noise Mixture of School Individual Noize, Enviroment Noise and} \\ \text{positive correlation of college c}$
 
 \\
 
 \\
 
-w\_{c, \text{gpa}}: \quad \text{How the colleges weigh your GPA}
+$w\_{c, \text{gpa}}: \quad \text{How the colleges weigh your GPA}$
 
 \\
 
-w\_{c, \text{SAT}}: \quad \text{How the colleges weigh your SAT}
+$w\_{c, \text{SAT}}: \quad \text{How the colleges weigh your SAT}$
 
 \\
 
-w\_{c, \text{essay}}: \quad \text{How the colleges weigh your Essays}
+$w\_{c, \text{essay}}: \quad \text{How the colleges weigh your Essays}$
 
 \\
 
-w\_{c, \text{EC's}}: \quad \text{How the colleges weigh your Extra-Curriculars}
+$w\_{c, \text{EC's}}: \quad \text{How the colleges weigh your Extra-Curriculars}$
 
 \\
 
-T_c: \quad \text{Binary academic triage results}
+$T_c: \quad \text{Binary academic triage results}$
 
 \\
 
-w\_{c, \text{Awards}}: \quad \text{How the colleges weigh your Awards}
+$w\_{c, \text{Awards}}: \quad \text{How the colleges weigh your Awards}$
 
 \\
 
-w\_{c, \text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}
+$w\_{c, \text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}$
 
 \\
 
-\beta: \quad \text{Cluster Specific Dynamic Beta, Likelyhood of success based on past events, default = 1, }
+$\beta: \quad \text{Cluster Specific Dynamic Beta, Likelyhood of success based on past events, default = 1, }$
 
 \\
 
-\text{Note}: \quad \text{When analyzed everything is taken out of 1. GPA, SAT } \\ \text{etc… is converted to a out of 1 metric and} \ S_c \ \text{is calculated out of 1.}$
+$\text{Note}: \quad \text{When analyzed everything is taken out of 1. GPA, SAT } \\ \text{etc… is converted to a out of 1 metric and} \ S_c \ \text{is calculated out of 1.}$
 
 Portfolio Chances
 
@@ -249,25 +248,25 @@ $$
 
 $$
 
-$\text{Where}:
+$\text{Where}:$
 
 \\
 
-\hat P(\text{At least 1}): \quad \text{Probability of 1 full ride}
+$\hat P(\text{At least 1}): \quad \text{Probability of 1 full ride}$
 
 \\
 
-T: \quad \text{Amount of Trials}
+$T: \quad \text{Amount of Trials}$
 
 \\
 
-\text{wins}\_t: \quad \text{Trial Wins of full ride college chances}
+$\text{wins}\_t: \quad \text{Trial Wins of full ride college chances}$
 
 \\
 
-S(\beta)^{k}\_c: \quad \text{Estimated Competitivness Probability of Full ride at college c of index k}
+$S(\beta)^{k}\_c: \quad \text{Estimated Competitivness Probability of Full ride at college c of index k}$
 
-\\$
+\\
 
 Gaussian Distribution
 
@@ -278,23 +277,23 @@ f(X)=\frac{1}{\sigma \sqrt{2\pi}}\text{exp}\left(-\frac{(x-\mu)^2}{2\sigma^2}\ri
 
 $$
 
-$\text{Where:}
+$\text{Where:}$
 
 \\
 
-f(X): \quad \text{Gaussian Distribution of a random vairable X}
+$f(X): \quad \text{Gaussian Distribution of a random vairable X}$
 
 \\
 
-\sigma^2: \quad \text{Variance}
+$\sigma^2: \quad \text{Variance}$
 
 \\
 
-\sigma: \quad \text{Standard Deviation}
+$\sigma: \quad \text{Standard Deviation}$
 
 \\
 
-\mu: \quad \text{Mean}$
+$\mu: \quad \text{Mean}$
 
 Noise
 
@@ -309,27 +308,27 @@ $$
 
 $$
 
-$\text{Where}:
+$\text{Where}:$
 
 \\
 
-\xi_c: \quad \text{Noise Mixture of School Individual Noize, Enviroment Noise and} \\ \text{positive correlation of college c}
+$\xi_c: \quad \text{Noise Mixture of School Individual Noize, Enviroment Noise and} \\ \text{positive correlation of college c}$
 
 \\
 
-\epsilon_c: \quad \text{College Specific Noice}
+$\epsilon_c: \quad \text{College Specific Noice}$
 
 \\
 
-u_i: \quad \text{Cluster Specific Enviroment Noise of c}
+$u_i: \quad \text{Cluster Specific Enviroment Noise of c}$
 
 \\
 
-\rho : \quad \text{Cluster Specific correlation strength}
+$\rho : \quad \text{Cluster Specific correlation strength}$
 
 \\
 
-\mathcal{N}(0, \sigma^2): \quad \text{Guassian distribution of center 0, and variation of }\sigma^2$
+$\mathcal{N}(0, \sigma^2): \quad \text{Guassian distribution of center 0, and variation of }\sigma^2$
 
 Dynamic Beta
 
@@ -360,23 +359,23 @@ Y_c\in\{0,1\}
 
 $$
 
-$\text{Where}:
+$\text{Where}:$
 
 \\
 
-\beta*k: \quad \text{Cluster Specific Dynamic Beta, Likelyhood of success based on }\\ \beta*{k-1} \text{and predicted }Y_c \text{ and }S_c
+$\beta*k: \quad \text{Cluster Specific Dynamic Beta, Likelyhood of success based on }\\ \beta*{k-1} \text{and predicted }Y_c \text{ and }S_c$
 
 \\
 
-S_c: \quad \text{College Application Strength for college c}
+$S_c: \quad \text{College Application Strength for college c}$
 
 \\
 
-Y_c: \quad \text{Binary estimated Full ride result}
+$Y_c: \quad \text{Binary estimated Full ride result}$
 
 \\
 
-\alpha: \quad \text{Learning Step Rate}$
+$\alpha: \quad \text{Learning Step Rate}$
 
 Academic Triage
 
@@ -391,26 +390,26 @@ T_c\in\{0,1\}
 
 $$
 
-$\text{Where:}
+$\text{Where:}$
 
 \\
 
-T_c: \quad \text{Binary Academic Triage Result, if } T_c = 0 \implies S_c = 0 \implies \text{ College Pais skipped, No trial conducted for college c}$
+$T_c: \quad \text{Binary Academic Triage Result, if } T_c = 0 \implies S_c = 0 \implies \text{ College Pais skipped, No trial conducted for college c}$
 
 Percent of full ride
 
 $$
 
-p_c=P(\text{admit}_c)×P(\text{full ride∣admit})_c
+$p_c=P(\text{admit}_c)×P(\text{full ride∣admit})_c
 
 
 $$
 
-$\text{Where:}
+$\text{Where:}$
 
 \\
 
-p_c: \quad \text{Probability of Full ride, when inputting in json file}$
+$p_c: \quad \text{Probability of Full ride, when inputting in json file}$
 
 Variables
 
@@ -420,31 +419,31 @@ $$
 
 \\
 
-\text{Default }S_c: 0.5
+$$\text{Default }S_c: 0.5
 
 \\
 
-\text{Standard Deviation}(\sigma): 0.005
+$$\text{Standard Deviation}(\sigma): 0.005
 
 \\
 
-\text{Mean}(\mu): 0
+$$\text{Mean}(\mu): 0
 
 \\
 
-\text{Maximum essay decay coefficient: } 0.5
+$$\text{Maximum essay decay coefficient: } 0.5
 
 \\
 
-\beta \text{ Clip}(0.5, 1.3)
+$$\beta \text{ Clip}(0.5, 1.3)
 
 \\
 
-\text{Increment Step }(\alpha): 0.05
+$$\text{Increment Step }(\alpha): 0.05
 
 \\
 
-a_{\text{SAT}} = 0.5, \quad \text{If test optional}
+$$a_{\text{SAT}} = 0.5, \quad \text{If test optional}
 
 
 $$
