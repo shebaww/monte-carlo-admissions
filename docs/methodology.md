@@ -42,16 +42,11 @@ Formulae:
 
 College Formula
 
-$$
-
-C_{\text{weight}}= w_{\text{gpa}} + w_{\text{SAT}} + w_{\text{essay}} + w_{\text{EC's}} + w_{\text{rec}} + w_{\text{Awards}}
+$$C_{\text{weight}}= w_{\text{gpa}} + w_{\text{SAT}} + w_{\text{essay}} + w_{\text{EC's}} + w_{\text{rec}} + w_{\text{Awards}}$$
 
 \\
 
-w_j \ge 0, \quad \sum_jw_j \approx 1
-
-
-$$
+$$w_j \ge 0, \quad \sum_jw_j \approx 1 $$
 
 $\text{Where: }
 
