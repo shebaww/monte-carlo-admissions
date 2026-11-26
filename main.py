@@ -20,7 +20,7 @@ BANNER = r"""
 
 def main():
     print(BANNER)   
-    print("Tip: Run 'python project.py --help' to view available command options.\n")
+    print("Tip: Run 'python main.py --help' to view available command options.\n")
     parser = argparse.ArgumentParser(description="Monte Carlo College Admissions Simulator")
     parser.add_argument("--config", type=str, default="templates/config_template.yaml", help="Path to config YAML")
     parser.add_argument("--colleges", type=str, default="templates/colleges_template.json", help="Path to colleges JSON")
