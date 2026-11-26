@@ -15,6 +15,7 @@ The simulator runs thousands of independent trials. In each trial, every college
 5. **Applies correlated noise** — colleges in the same cluster share a common noise term (`ξ_c = ρ·u_i + (1-ρ)·ε_c`), reflecting real-world correlation (e.g., government scholarship committees move together).
 
 After all trials, the simulator reports:
+
 - **P(at least 1 full ride)** across your entire portfolio
 - **Expected number of wins** per trial
 - **Per-college win percentages** (bar chart)
@@ -40,8 +41,8 @@ pip install -r requirements.txt
 Copy the templates and fill them in:
 
 ```bash
-cp templates/config_template.yaml config.yaml
-cp templates/colleges_template.json colleges.json
+cp templates/config_template.yaml data/config.yaml
+cp templates/colleges_template.json data/colleges.json
 ```
 
 Edit `config.yaml` with your profile and `colleges.json` with your college list. See [Configuration](#configuration) below.
@@ -55,16 +56,16 @@ python main.py
 By default it looks for `templates/config_template.yaml` and `templates/colleges_template.json`. To use your own files:
 
 ```bash
-python main.py --config config.yaml --colleges colleges.json --out outputs
+python main.py --config data/config.yaml --colleges data/colleges.json --out outputs
 ```
 
 **CLI arguments:**
 
-| Argument    | Default                            | Description                        |
-|-------------|------------------------------------|------------------------------------|
-| `--config`  | `templates/config_template.yaml`   | Path to your YAML config file      |
-| `--colleges`| `templates/colleges_template.json` | Path to your colleges JSON file    |
-| `--out`     | `outputs`                          | Directory where plots are saved    |
+| Argument     | Default                            | Description                     |
+| ------------ | ---------------------------------- | ------------------------------- |
+| `--config`   | `templates/config_template.yaml`   | Path to your YAML config file   |
+| `--colleges` | `templates/colleges_template.json` | Path to your colleges JSON file |
+| `--out`      | `outputs`                          | Directory where plots are saved |
 
 ---
 
@@ -74,20 +75,20 @@ python main.py --config config.yaml --colleges colleges.json --out outputs
 
 ```yaml
 config:
-  trials: 10000       # Number of Monte Carlo trials
-  sigma: 0.008        # Noise standard deviation
-  alpha: 0.05         # Beta learning rate
-  lambda: 0.03        # Essay decay rate per college beyond capacity_c
-  capacity_c: 20      # Number of colleges before essay decay kicks in
-  beta_min: 0.5       # Minimum beta clamp
-  beta_max: 1.3       # Maximum beta clamp
-  beta_default: 1.0   # Starting beta (trials are independent)
-  mu: 0               # Noise mean
-  seed: 42            # RNG seed for reproducibility
+  trials: 10000 # Number of Monte Carlo trials
+  sigma: 0.008 # Noise standard deviation
+  alpha: 0.05 # Beta learning rate
+  lambda: 0.03 # Essay decay rate per college beyond capacity_c
+  capacity_c: 20 # Number of colleges before essay decay kicks in
+  beta_min: 0.5 # Minimum beta clamp
+  beta_max: 1.3 # Maximum beta clamp
+  beta_default: 1.0 # Starting beta (trials are independent)
+  mu: 0 # Noise mean
+  seed: 42 # RNG seed for reproducibility
 
 clusters:
   Need:
-    rho: 0.45         # Cluster correlation strength (0.0 to 1.0)
+    rho: 0.45 # Cluster correlation strength (0.0 to 1.0)
   Merit:
     rho: 0.35
   Government:
@@ -97,23 +98,23 @@ clusters:
 
 applicant:
   name: "Your Name"
-  gpa: 3.55           # Raw GPA on a 4.0 scale
-  sat: 1370           # Raw SAT out of 1600
-  essay: 0.80         # Self-rating out of 1.0
-  ecs: 0.70           # Extracurriculars out of 1.0
-  rec: 0.85           # Recommendation letters out of 1.0
-  awards: 0.63        # Awards/honors out of 1.0
+  gpa: 3.55 # Raw GPA on a 4.0 scale
+  sat: 1370 # Raw SAT out of 1600
+  essay: 0.80 # Self-rating out of 1.0
+  ecs: 0.70 # Extracurriculars out of 1.0
+  rec: 0.85 # Recommendation letters out of 1.0
+  awards: 0.63 # Awards/honors out of 1.0
 ```
 
 GPA and SAT are automatically converted to a [0, 1] scale internally. All other applicant fields must be entered as values between 0.0 and 1.0.
 
 **Rating guide (essay, ECs, rec, awards):**
 
-| Range | Description |
-|-------|-------------|
-| 0.0–0.3 | Weak — generic participation, basic essay |
-| 0.4–0.6 | Average/Good — club leadership, local awards, solid essay |
-| 0.7–0.8 | Strong — state/national leadership, unique essay, strong rec |
+| Range   | Description                                                                      |
+| ------- | -------------------------------------------------------------------------------- |
+| 0.0–0.3 | Weak — generic participation, basic essay                                        |
+| 0.4–0.6 | Average/Good — club leadership, local awards, solid essay                        |
+| 0.7–0.8 | Strong — state/national leadership, unique essay, strong rec                     |
 | 0.9–1.0 | Elite — international olympiads, founded major initiatives, exceptional research |
 
 ### `colleges.json`
@@ -123,12 +124,12 @@ Each key is the college/scholarship name. All weights must sum to approximately 
 ```json
 {
   "Example University (Full Ride Program)": {
-    "w_gpa": 0.30,
-    "w_sat": 0.20,
-    "w_essay": 0.20,
+    "w_gpa": 0.3,
+    "w_sat": 0.2,
+    "w_essay": 0.2,
     "w_ecs": 0.15,
     "w_rec": 0.05,
-    "w_awards": 0.10,
+    "w_awards": 0.1,
     "min_sat": 1350,
     "min_gpa": 3.5,
     "test_optionality": true,
@@ -139,20 +140,20 @@ Each key is the college/scholarship name. All weights must sum to approximately 
 }
 ```
 
-| Field             | Type    | Description |
-|-------------------|---------|-------------|
-| `w_gpa`           | float   | College's weight on GPA (must sum to ~1.0 with others) |
-| `w_sat`           | float   | College's weight on SAT |
-| `w_essay`         | float   | College's weight on essays |
-| `w_ecs`           | float   | College's weight on extracurriculars |
-| `w_rec`           | float   | College's weight on recommendation letters |
-| `w_awards`        | float   | College's weight on awards/honors |
-| `min_gpa`         | float   | Competitive minimum GPA (4.0 scale) |
-| `min_sat`         | int     | Competitive minimum SAT (1600 scale) |
-| `test_optionality`| bool    | Whether the school is test-optional |
-| `full_ride_perc`  | float   | `P(Admit) × P(Full Ride | Admit)` |
-| `submitting_sat`  | bool    | Whether you are submitting your SAT to this school |
-| `cluster`         | string  | Must match a cluster name defined in `config.yaml` |
+| Field              | Type   | Description                                            |
+| ------------------ | ------ | ------------------------------------------------------ | ------- |
+| `w_gpa`            | float  | College's weight on GPA (must sum to ~1.0 with others) |
+| `w_sat`            | float  | College's weight on SAT                                |
+| `w_essay`          | float  | College's weight on essays                             |
+| `w_ecs`            | float  | College's weight on extracurriculars                   |
+| `w_rec`            | float  | College's weight on recommendation letters             |
+| `w_awards`         | float  | College's weight on awards/honors                      |
+| `min_gpa`          | float  | Competitive minimum GPA (4.0 scale)                    |
+| `min_sat`          | int    | Competitive minimum SAT (1600 scale)                   |
+| `test_optionality` | bool   | Whether the school is test-optional                    |
+| `full_ride_perc`   | float  | `P(Admit) × P(Full Ride                                | Admit)` |
+| `submitting_sat`   | bool   | Whether you are submitting your SAT to this school     |
+| `cluster`          | string | Must match a cluster name defined in `config.yaml`     |
 
 **Computing `full_ride_perc`:** Use the international acceptance rate if available, otherwise apply a 0.8× penalty on the overall rate for international applicants. Multiply by the proportion of admitted students who receive a full ride (tuition + stipend). For government scholarships where admission = full ride, `full_ride_perc = P(Admit)`. Be conservative — round down to the nearest 0.005.
 
@@ -177,6 +178,7 @@ You do not necessarily need to increase your list based on current odds.
 ```
 
 **Plots saved to `outputs/`:**
+
 - `college_wins.png` — horizontal bar chart of win probability per college, sorted descending
 - `cluster_wins.png` — bar chart of total wins per cluster across all trials
 
@@ -310,6 +312,7 @@ pip install -r requirements.txt
 
 ## Limitations and Assumptions
 
+- This model is heuristic and can't be backtested, it's only purpose is to guide build the strongest college list you can based on statistics. It is not a final predictor of your admission results. It is a tool, use it apporpriately.
 - The model is calibrated for **full rides only** (tuition + stipend). Partial scholarships are not modeled.
 - College weights (`w_gpa`, `w_essay`, etc.) are estimates based on publicly available information — no simulator can replicate a real admissions committee.
 - `full_ride_perc` is a rough estimate. Small errors here compound significantly, so research each program carefully.
