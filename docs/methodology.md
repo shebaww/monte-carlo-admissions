@@ -1,4 +1,4 @@
-# Full-Ride College Monte Carlo — Spec
+# Monte-Carlo-Admissions
 
 ---
 
