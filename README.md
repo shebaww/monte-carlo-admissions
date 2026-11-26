@@ -325,6 +325,12 @@ pip install -r requirements.txt
 
 - Add logistic Link
 - Other Functions to estimate other parts of the application like P(At least 2)
+- Code architecture in architecture.md
+- Tutorials
+- How to guides
+- References
+- Explanation
+- Citation
 
 ## License
 
