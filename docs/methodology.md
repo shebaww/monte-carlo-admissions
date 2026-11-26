@@ -46,8 +46,7 @@ $$C_{\text{weight}}= w_{\text{gpa}} + w_{\text{SAT}} + w_{\text{essay}} + w_{\te
 
 $$w_j \ge 0, \quad \sum_jw_j \approx 1 $$
 
-$$
-\text{Where: }
+$\text{Where: }
 
 \\
 
@@ -75,8 +74,7 @@ w\_{\text{Awards}}: \quad \text{How the colleges weigh your Awards}
 
 \\
 
-w\_{\text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}
-$$
+w\_{\text{rec}}: \quad \text{How the colleges weigh your Recommendation Letters}$
 
 Conversion metric
 
