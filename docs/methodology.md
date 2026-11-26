@@ -252,12 +252,6 @@ Where:
 
 ---
 
-## Personal Note
-
-I have changed the minimum GPA for NYUAD, ViniUni, Clark, DKU because they actually view academics themselves holistically and they won't even be considered in the Monte as they will fail the academic triage (not in real life hopefully), because I have some chance of passing the academic triage in real life I will mimic that in the Monte by decreasing their minimum GPA.
-
----
-
 ## Calculation — more direct pipeline
 
 - Check College weight sums, proper data types, file exists
@@ -270,10 +264,3 @@ I have changed the minimum GPA for NYUAD, ViniUni, Clark, DKU because they actua
 - Then you can calculate other external information
 
 ---
-
-## Clusters
-
-- **Need (Institutional Full-Need / Need-Based Aid):** Universities that meet demonstrated financial need for international students (need-aware or need-blind). Correlation comes from shared international aid budgets and financial-need evaluation.
-- **Merit (Competitive Merit / Named Full-Ride Scholarships):** Merit scholarships or full-ride fellowships (e.g., Stamps, Presidential/Honors merit awards, KAIST/VinUni merit tracks). Correlation reflects competition among high-achieving/high-output applicants and merit pool caps.
-- **Government (National / Bilateral Government Scholarships):** State-funded scholarships (e.g., MEXT, CSC, Türkiye Bursları, Stipendium Hungaricum). Correlation reflects country quotas, embassy/bilateral selection dynamics, and government funding rules.
-- **Special (Mission-, Partner-, or Region-Specific Tracks):** Programs with distinct structural criteria or dedicated pipelines (e.g., Berea's work/low-income model, Mastercard Foundation partner cohorts, Bocconi's Nuovo Fiore Ethiopia track).
