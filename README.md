@@ -1,5 +1,9 @@
 # Monte-Carlo Admissions
 
+<p align="center">
+  <img src="Monte Carlo Admissions.jpg" alt="College win chart" width="600">
+</p>
+
 A Monte Carlo simulator for estimating your probability of winning a **full-ride scholarship** across a portfolio of colleges and government scholarships. It models holistic admissions noise, correlated outcomes within scholarship clusters, academic triage, and essay quality decay — giving you a realistic picture of your odds and actionable advice on your college list.
 
 ---
