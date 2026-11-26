@@ -46,11 +46,9 @@ $$C_{\text{weight}}= w_{\text{gpa}} + w_{\text{SAT}} + w_{\text{essay}} + w_{\te
 
 $$w_j \ge 0, \quad \sum_jw_j \approx 1 $$
 
-$\text{Where: }$
-
+$\text{Where: }
 \\
-
-C\_{\text{weight}}: \quad {\text{How the colleges weigh their decision out of 1.00}}
+C\_{\text{weight}}: \quad {\text{How the colleges weigh their decision out of 1.00}}$
 
 \\
 
