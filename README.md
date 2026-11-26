@@ -312,7 +312,7 @@ pip install -r requirements.txt
 
 ## Limitations and Assumptions
 
-- This model is heuristic and can't be backtested, it's only purpose is to guide build the strongest college list you can based on statistics. It is not a final predictor of your admission results. It is a tool, use it apporpriately.
+- This model is heuristic and can't be backtested, it's only purpose is to guide build the strongest college list you can based on statistics. It is not a final predictor of your admission results. It is a tool, use it apporpriately. This model is **only** accurate if your inputs are make sure to input unbiased and accurate information.
 - The model is calibrated for **full rides only** (tuition + stipend). Partial scholarships are not modeled.
 - College weights (`w_gpa`, `w_essay`, etc.) are estimates based on publicly available information — no simulator can replicate a real admissions committee.
 - `full_ride_perc` is a rough estimate. Small errors here compound significantly, so research each program carefully.
@@ -320,6 +320,11 @@ pip install -r requirements.txt
 - The noise term is small by design (`σ = 0.008`). The model represents systematic competitiveness, not lottery-level randomness.
 
 ---
+
+## Improvements
+
+- Add logistic Link
+- Other Functions to estimate other parts of the application like P(At least 2)
 
 ## License
 
